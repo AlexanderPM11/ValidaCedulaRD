@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cedula-v6';
+const CACHE_NAME = 'cedula-v7';
 const ASSETS = [
     './',
     './index.html',
