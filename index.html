@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validador de Cédula RD - Verifica tu Identidad en República Dominicana</title>
+    <meta name="description" content="Validador oficial de cédula de la República Dominicana. Rápido, seguro, privado y funcional offline. Todo el procesamiento ocurre en tu dispositivo.">
+    <meta name="keywords" content="cedula rd, validar cedula dominicana, verificador de identidad rd, pwa dominicana, luhn dominica">
+    <meta name="author" content="apolanco.com">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://cedula.apolanco.com/"> <!-- Update with final URL if known -->
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cedula.apolanco.com/">
+    <meta property="og:title" content="Validador de Cédula RD - Rápido y Seguro">
+    <meta property="og:description" content="Verifica instantáneamente la validez de cualquier número de cédula de la RD. Funciona offline y protege tu privacidad.">
+    <meta property="og:image" content="https://cedula.apolanco.com/icons/icon-512x512.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://cedula.apolanco.com/">
+    <meta property="twitter:title" content="Validador de Cédula RD">
+    <meta property="twitter:description" content="Verifica números de cédula dominicana de forma rápida, segura y sin internet.">
+    <meta property="twitter:image" content="https://cedula.apolanco.com/icons/icon-512x512.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="icons/icon-192x192.png">
+    <link rel="shortcut icon" href="icons/icon-192x192.png">
+
+    <!-- PWA -->
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Cédula RD</h1>
+            <p>Validador de Identidad</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <div class="input-group">
+                    <label for="cedulaInput">Número de Cédula</label>
+                    <input 
+                        type="text" 
+                        id="cedulaInput" 
+                        placeholder="001-0000000-0" 
+                        inputmode="numeric" 
+                        maxlength="13" 
+                        autocomplete="off"
+                    >
+                    <div id="feedback" class="feedback"></div>
+                </div>
+
+                <div class="result-card" id="resultCard">
+                    <div id="statusIcon" class="status-icon"></div>
+                    <div class="status-text" id="statusText">Introduce una cédula</div>
+                    <div class="calculation-steps" id="calculationSteps"></div>
+                    <div class="button-group">
+                        <button id="detailsBtn" class="btn-text hidden">Ver detalles</button>
+                        <button id="copyBtn" class="btn-outline hidden">Copiar Resultado</button>
+                    </div>
+                </div>
+            </div>
+
+            <section class="history">
+                <h2>Historial Reciente</h2>
+                <div id="historyList" class="history-list">
+                    <!-- History items will be injected here -->
+                    <p class="empty-msg">No hay verificaciones recientes</p>
+                </div>
+                <button id="clearHistory" class="btn-text hidden">Limpiar Historial</button>
+            </section>
+        </main>
+
+        <footer>
+            <p>Creado por <a href="https://apolanco.com" target="_blank">apolanco.com</a></p>
+            <p><button id="infoBtn" class="btn-text">¿Cómo funciona?</button></p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js');
+            });
+        }
+    </script>
+</body>
+</html>
