@@ -1,28 +1,56 @@
-# Dependency directories
+# === Dependencias y Módulos ===
 node_modules/
 jspm_packages/
+web_resources/
 
-# OS metadata
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# IDEs and editors
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Local env files
+# === Variables de Entorno (¡Sensible/Privado!) ===
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env.deploy
+*.env
 
-# Temp files
-tmp/
+# (NO ignorar .env.example)
+!.env.example
+
+# === Archivos del Sistema Operativo ===
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# === IDEs y Editores de Código ===
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+*~
+
+# === Registros y Logs ===
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# === Archivos Temporales y Caché ===
+.tmp/
+tmp/
+.cache/
+.sass-cache/
+.eslintcache
+.parcel-cache
+.pnp/
+.pnp.js

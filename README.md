@@ -1,68 +1,120 @@
 # Validador de Cédula RD 🇩🇴
 
-Una Aplicación Web Progresiva (PWA) e-ficiente, segura y moderna para validar números de cédula de la República Dominicana.
+Una Aplicación Web Progresiva (PWA) moderna, rápida y segura diseñada para validar la estructura de los números de la **Cédula de Identidad y Electoral** de la República Dominicana de forma offline y con total privacidad.
 
-![Licencia](https://img.shields.io/badge/license-MIT-blue.svg)
-![PWA](https://img.shields.io/badge/PWA-Ready-orange.svg)
-![Offline](https://img.shields.io/badge/Offline-Support-green.svg)
+---
 
-## ✨ Características
+[![Licencia](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](LICENSE)
+[![PWA](https://img.shields.io/badge/PWA-Ready-orange.svg?style=for-the-badge)](manifest.json)
+[![Docker](https://img.shields.io/badge/Docker-Enabled-blue.svg?style=for-the-badge&logo=docker)](docker-compose.yml)
+[![Dokploy](https://img.shields.io/badge/Deploy%20on-Dokploy-purple.svg?style=for-the-badge)](https://dokploy.com)
 
--   **Validación en Tiempo Real**: Comprueba la validez de una cédula mientras escribes.
--   **Algoritmo Oficial**: Implementa el algoritmo de Luhn (Módulo 10) específico para la JCE.
--   **Soporte PWA**: Instálalo en tu móvil o escritorio como una aplicación nativa.
--   **Funcionamiento Offline**: Una vez cargado, funciona sin necesidad de internet.
--   **Privacidad Total**: Todo el procesamiento ocurre localmente en tu navegador. Los datos nunca salen de tu dispositivo.
--   **Desglose del Cálculo**: Visualiza paso a paso cómo se obtiene el dígito verificador.
--   **Historial Local**: Acceso rápido a las últimas 5 verificaciones realizadas.
--   **Diseño Premium**: Interfaz minimalista con soporte automático para modo oscuro.
+---
 
-## 🚀 Cómo Empezar
+## ⚡ Características
 
-### Requisitos
-Solo necesitas un navegador web moderno (Chrome, Edge, Safari, Firefox).
+*   **Validación en Tiempo Real**: Comprueba de manera instantánea si una cédula es válida mientras escribes (con autoformato `000-0000000-0`).
+*   **Algoritmo de Luhn (Módulo 10)**: Implementa la lógica de verificación oficial establecida por la Junta Central Electoral (JCE).
+*   **Paso a Paso Interactivo**: Te permite inspeccionar detalladamente las multiplicaciones y sumas que determinan el dígito verificador.
+*   **Privacidad Absoluta**: Todo el procesamiento se realiza localmente en el navegador. Ningún dato sensible sale de tu dispositivo.
+*   **Soporte Offline Completo**: Diseñado como una PWA con un Service Worker que permite su uso completo sin conexión a internet.
+*   **Historial Reciente**: Guarda las últimas 5 consultas en el `localStorage` para un acceso rápido.
+*   **Interfaz Premium**: Diseño visualmente pulido con soporte para modo oscuro automático.
 
-### Ejecución Local
-Para disfrutar de todas las funciones de PWA (instalación y caché), se recomienda usar un servidor local:
+---
 
-1.  Clona el repositorio:
+## 🚀 Despliegue en Dokploy
+
+[Dokploy](https://dokploy.com) es una herramienta excelente y ligera para desplegar aplicaciones utilizando Docker de forma autohospedada.
+
+Para desplegar este proyecto en tu panel de Dokploy, sigue estos pasos:
+
+### 1. Crear una Aplicación en Dokploy
+1. Inicia sesión en tu panel de **Dokploy**.
+2. Ve al panel de proyectos y crea uno nuevo o selecciona uno existente.
+3. Haz clic en **Create Service** y selecciona **Compose**.
+
+### 2. Configurar el Repositorio de Git
+1. Conecta tu repositorio de GitHub / GitLab donde está subido este proyecto:
+   * **Repository**: `https://github.com/tu-usuario/ValidaCedulaRD`
+   * **Branch**: `main` o la rama por defecto.
+2. Si prefieres usar Docker directamente en Dokploy sin Compose, también puedes crear una **Multi-file Application** seleccionando la opción de **Dockerfile**.
+
+### 3. Configurar Variables de Entorno (`.env`)
+En Dokploy, dentro de la pestaña **Environment** de tu aplicación Compose, agrega la variable para el puerto:
+*   `PORT`: `80` (o el puerto interno que desees exponer al proxy reverso).
+
+> [!NOTE]
+> Por defecto, el archivo [docker-compose.yml](file:///c:/Projects/Personal/Programacion/ValidaCedulaRD/docker-compose.yml) está configurado para mapear el puerto desde la variable de entorno `${PORT:-8080}` hacia el puerto `80` del contenedor Nginx.
+
+### 4. Configurar el Dominio y SSL
+1. Dirígete a la pestaña **Domains** en Dokploy.
+2. Añade tu dominio o subdominio personalizado (ejemplo: `cedula.tudominio.com`).
+3. Apunta el puerto del dominio al puerto correspondiente (si usas Compose, Dokploy se encargará de enlazar el contenedor mediante Traefik).
+4. Activa la opción de **SSL (HTTPS)** para generar un certificado Let's Encrypt de forma automática y gratuita.
+
+---
+
+## 💻 Ejecución Local
+
+### Opción A: Con Docker Compose (Recomendado)
+
+Asegúrate de tener instalados Docker y Docker Compose en tu máquina.
+
+1.  Copia el archivo de ejemplo de variables de entorno:
+    ```bash
+    cp .env.example .env
+    ```
+2.  Levanta el contenedor:
+    ```bash
+    docker-compose up -d --build
+    ```
+3.  La aplicación estará lista para usarse en: [http://localhost:8080](http://localhost:8080).
+
+### Opción B: Servidor Local de Node (npx)
+
+Ideal para desarrollo rápido sin contenedores.
+
+1.  Clona el repositorio e ingresa a la carpeta:
     ```bash
     git clone https://github.com/AlexanderPM11/ValidaCedulaRD.git
-    ```
-2.  Entra en la carpeta:
-    ```bash
     cd ValidaCedulaRD
     ```
-3.  Inicia un servidor (ejemplo con `serve`):
+2.  Inicia un servidor estático rápido:
     ```bash
     npx serve .
     ```
-4.  Abre `http://localhost:3000` en tu navegador.
+3.  Abre la URL que te provea la consola (normalmente `http://localhost:3000`).
 
-### Despliegue con Docker (VPS)
-Si deseas desplegarlo en tu propio servidor usando Docker:
+---
 
-1.  Construye e inicia el contenedor:
-    ```bash
-    docker-compose up -d
-    ```
-2.  La app estará disponible en el puerto `8080`.
+## 🛠️ Estructura del Proyecto
 
-## 🛠️ Tecnologías
+*   `[index.html](file:///c:/Projects/Personal/Programacion/ValidaCedulaRD/index.html)`: Estructura HTML semántica y metadatos SEO/PWA.
+*   `[style.css](file:///c:/Projects/Personal/Programacion/ValidaCedulaRD/style.css)`: Estilos visuales en CSS nativo (Vanilla) con diseño responsive.
+*   `[app.js](file:///c:/Projects/Personal/Programacion/ValidaCedulaRD/app.js)`: Lógica principal del algoritmo de Luhn e interacción con el DOM.
+*   `[service-worker.js](file:///c:/Projects/Personal/Programacion/ValidaCedulaRD/service-worker.js)`: Cachea los recursos esenciales para habilitar el uso offline.
+*   `[manifest.json](file:///c:/Projects/Personal/Programacion/ValidaCedulaRD/manifest.json)`: Metadatos para transformar la aplicación web en una PWA instalable.
+*   `[Dockerfile](file:///c:/Projects/Personal/Programacion/ValidaCedulaRD/Dockerfile)`: Imagen mínima basada en Alpine Nginx para servir el sitio estático.
 
--   **Frontend**: HTML5, CSS3 (Vanilla), JavaScript (ES6+).
--   **PWA**: Web App Manifest, Service Workers.
--   **UI/UX**: SweetAlert2 para diálogos y notificaciones premium.
+---
 
-## 🧠 El Algoritmo
-El sistema utiliza el método de validación oficial:
-1.  Multiplica los primeros 10 dígitos alternadamente por 1 y 2.
-2.  Si un resultado es > 9, suma sus dígitos.
-3.  Suma todos los resultados finales.
-4.  El dígito verificador es la diferencia entre esa suma y el siguiente múltiplo de 10.
+## 🧠 ¿Cómo funciona el Algoritmo?
 
-## ✒️ Autor
+La cédula dominicana de 11 dígitos se valida mediante el algoritmo de Luhn (Módulo 10):
+
+1.  Se toman los primeros **10 dígitos**.
+2.  Se multiplican alternadamente por **1 y 2**, de derecha a izquierda o de izquierda a derecha según el estándar JCE (empezando por 1 para el primer dígito, 2 para el segundo, etc.).
+3.  Si el resultado de alguna multiplicación es de dos dígitos (ej: `6 x 2 = 12`), estos se suman entre sí (`1 + 2 = 3`).
+4.  Se realiza la sumatoria de todos los números resultantes.
+5.  Se calcula el residuo de la suma al dividir por 10 (`suma % 10`).
+6.  El dígito verificador es la cantidad que falta para alcanzar la siguiente decena (es decir: `(10 - residuo) % 10`).
+7.  Se compara este resultado con el **11vo dígito** de la cédula original. Si coinciden, la cédula es estructuralmente válida.
+
+---
+
+## ✒️ Autor y Licencia
+
 Desarrollado con ❤️ por **[apolanco.com](https://apolanco.com)**.
 
-## 📄 Licencia
-Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+Este proyecto se encuentra bajo la Licencia **MIT**. Consulta el archivo `LICENSE` para más detalles.

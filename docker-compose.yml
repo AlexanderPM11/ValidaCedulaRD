@@ -1,9 +1,18 @@
-version: '3.8'
-
 services:
   validador-cedula:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: validador-cedula-rd:latest
     container_name: validador-cedula-rd
-    ports:
-      - "8080:80"
+    # ports:
+    #   - "${PORT:-8080}:80"
     restart: always
+    # Comenta o elimina la línea de puertos si prefieres que Dokploy/Traefik
+    # maneje el tráfico directamente sin exponer el puerto a la máquina host.
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.validador-cedula.rule=Host(`cedula.tu-dominio.com`)"
+    #   - "traefik.http.routers.validador-cedula.entrypoints=websecure"
+    #   - "traefik.http.routers.validador-cedula.tls=true"
+    #   - "traefik.http.services.validador-cedula.loadbalancer.server.port=80"
